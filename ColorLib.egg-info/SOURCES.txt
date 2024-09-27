@@ -1,0 +1,12 @@
+LICENSE
+README.md
+setup.py
+ColorLib/__init__.py
+ColorLib/cieobserver.py
+ColorLib/exr.py
+ColorLib/tonemapping.py
+ColorLib.egg-info/PKG-INFO
+ColorLib.egg-info/SOURCES.txt
+ColorLib.egg-info/dependency_links.txt
+ColorLib.egg-info/requires.txt
+ColorLib.egg-info/top_level.txt
