@@ -8,4 +8,5 @@ ColorLib/tonemapping.py
 ColorLib.egg-info/PKG-INFO
 ColorLib.egg-info/SOURCES.txt
 ColorLib.egg-info/dependency_links.txt
+ColorLib.egg-info/requires.txt
 ColorLib.egg-info/top_level.txt

@@ -2,8 +2,7 @@ import numpy as np
 
 # Chris Wyman, Peter-Pike Sloan, and Peter Shirley, 
 # "Simple Analytic Approximations to the CIE XYZ Color Matching Functions", 
-# Journal of Computer Graphics Techniques (JCGT), vol. 2, no. 2, 1–11, 2013.
-# Available at: http://jcgt.org/published/0002/02/01/
+# in Journal of Computer Graphics Techniques (JCGT), vol. 2, no. 2, 1–11, 2013.
 
 def _gausian_fit(lamb, a, B, y, g):
     amount = y if lamb < B else g
@@ -13,14 +12,15 @@ def wavelength_to_xyz(wavelength, illuminant=np.array([0.95047,1,1.08883])):
     """Converts a wavelength into its RGB counterpart using a piecewise fit.
 
     Args:
-        wavelength: Wavelength of light in nm
-        illuminant: CIE illuminant. Defaults to D65
+        wavelength (float): Wavelength of light in nm.
+        illuminant (np.array(3)): CIE illuminant. Defaults to D65.
         
     Raises:
         ValueError: If wavelength is less than or equal to zero.
         
-    Returns: 
-        The color in XYZ space (3-long numpy array)"""
+    Returns:
+        np.ndarray: The color in XYZ space (3-long numpy array).
+    """
 
     if wavelength <= 0.0:
         raise ValueError("Wavelength must be greater than zero.")

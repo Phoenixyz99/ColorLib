@@ -85,7 +85,7 @@ def _linear_rgb_to_srgb(linear_rgb, srgb):
     if x < linear_rgb.shape[0] and y < linear_rgb.shape[1]:
         for c in range(3):
             val = linear_rgb[x, y, c]
-            val = min(max(val, 0.0), 1.0)  # Clip between 0 and 1
+            val = min(max(val, 0.0), 1.0)
             if val <= 0.0031308:
                 srgb_val = 12.92 * val
             else:
@@ -93,35 +93,44 @@ def _linear_rgb_to_srgb(linear_rgb, srgb):
             srgb[x, y, c] = min(max(srgb_val, 0.0), 1.0)
 
 def kimkautz(rgb_image, display_max=300, display_min=0.3, details=3, efficiency=0.5, epsilon=1e-6):
-    """Tonemap the given linear rgb image, and outputs an srgb image.
-    Args:
-        rgb_image: Numpy array with: [(x, y, [(r, g, b)])]
-        display_max: Maximum candelas/m2 the monitor can output (nits)
-        display_min: Minimum candelas/m2 the monitor can output
-        details: Higher numbers results in loss of detail in bright areas
-        efficiency: Higher numbers decrase the contrast of the entire image
-        epsilon: Number used to ensure division by zero does not occur.
+    """
+    ### WARNING: CUDA FUNCTION
 
-    Returns: 
-        sRGB image in the same format as rgb_image."""
+    Tonemap the given linear RGB image, and outputs an sRGB image.
+
+    M. Kim and J. Kautz,
+    “Consistent tone reproduction,” 
+    in Proceedings of Computer Graphics and Imaging (2008)
+
+    Args:
+        rgb_image (np.array(W, H, (R, G, B))): Original image in linear RGB form.
+        display_max (float): Maximum candelas/m2 the monitor can output (nits).
+        display_min (float): Minimum candelas/m2 the monitor can output.
+        details (float): Higher numbers results in loss of detail in bright areas.
+        efficiency (float): Higher numbers decrase the contrast of the entire image.
+        epsilon (float): Number used to ensure division by zero does not occur.
+
+    Returns:
+        np.ndarray: sRGB image in the same format as rgb_image.
+    """
 
 
     # Setup
     rgb_image = rgb_image.astype(np.float32)
-    height, width, channels = rgb_image.shape # We need the dimensions of the image to put it on the device
+    width, height, channels = rgb_image.shape # We need the dimensions of the image to put it on the device
 
     rgb_image_device = cuda.to_device(rgb_image)
 
-    L_0_device = cuda.device_array((height, width), dtype=np.float32)
-    L_log_device = cuda.device_array((height, width), dtype=np.float32)
-    L_1_device = cuda.device_array((height, width), dtype=np.float32)
-    w_device = cuda.device_array((height, width), dtype=np.float32)
-    k_2_device = cuda.device_array((height, width), dtype=np.float32)
-    srgb_image_device = cuda.device_array((height, width, channels), dtype=np.float32)
+    L_0_device = cuda.device_array((width, height), dtype=np.float32)
+    L_log_device = cuda.device_array((width, height), dtype=np.float32)
+    L_1_device = cuda.device_array((width, height), dtype=np.float32)
+    w_device = cuda.device_array((width, height), dtype=np.float32)
+    k_2_device = cuda.device_array((width, height), dtype=np.float32)
+    srgb_image_device = cuda.device_array((width, height, channels), dtype=np.float32)
 
     threadsperblock = (16, 16) # TODO: Experiment with profilers
-    blockspergrid_x = int(math.ceil(height / threadsperblock[0]))
-    blockspergrid_y = int(math.ceil(width / threadsperblock[1]))
+    blockspergrid_x = int(math.ceil(width / threadsperblock[0]))
+    blockspergrid_y = int(math.ceil(height / threadsperblock[1]))
     blockspergrid = (blockspergrid_x, blockspergrid_y)
 
     # Find the luminance of the image
@@ -138,6 +147,7 @@ def kimkautz(rgb_image, display_max=300, display_min=0.3, details=3, efficiency=
 
     L_dmax = math.log(display_max)
     L_dmin = math.log(display_min)
+
     d0 = L_smax - L_smin
 
     k_1 = (L_dmax - L_dmin) / (d0 + epsilon) # Scale factor
