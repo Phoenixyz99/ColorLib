@@ -20,7 +20,6 @@ def xyz_to_rgb(xyz):
 def rgb_to_xyz(rgb):
     return np.dot(rgb, M0.T)
 
-# TODO: Krawczyk et. al.
 # M. Kim and J. Kautz,
 # “Consistent tone reproduction,” 
 # in Proceedings of Computer Graphics and Imaging (2008)
@@ -97,14 +96,14 @@ def kimkautz(rgb_image, display_max=300, display_min=0.3, details=3, efficiency=
     """
     ### WARNING: CUDA FUNCTION
 
-    Tonemap the given linear RGB image, and outputs an sRGB image.
+    Tonemap the given linear RGB image, and outputs an sRGB image. Note that your image must be in H, W form.
 
     M. Kim and J. Kautz,
     “Consistent tone reproduction,” 
     in Proceedings of Computer Graphics and Imaging (2008)
 
     Args:
-        rgb_image (np.array(W, H, (R, G, B))): Original image in linear RGB form.
+        rgb_image (np.array(H, W, (R, G, B))): Original image in linear RGB form.
         display_max (float): Maximum candelas/m2 the monitor can output (nits).
         display_min (float): Minimum candelas/m2 the monitor can output.
         details (float): Higher numbers results in loss of detail in bright areas.
@@ -118,20 +117,20 @@ def kimkautz(rgb_image, display_max=300, display_min=0.3, details=3, efficiency=
 
     # Setup
     rgb_image = rgb_image.astype(np.float32)
-    width, height, channels = rgb_image.shape # We need the dimensions of the image to put it on the device
+    height, width, channels = rgb_image.shape # We need the dimensions of the image to put it on the device
 
     rgb_image_device = cuda.to_device(rgb_image)
 
-    L_0_device = cuda.device_array((width, height), dtype=np.float32)
-    L_log_device = cuda.device_array((width, height), dtype=np.float32)
-    L_1_device = cuda.device_array((width, height), dtype=np.float32)
-    w_device = cuda.device_array((width, height), dtype=np.float32)
-    k_2_device = cuda.device_array((width, height), dtype=np.float32)
-    srgb_image_device = cuda.device_array((width, height, channels), dtype=np.float32)
+    L_0_device = cuda.device_array((height, width), dtype=np.float32)
+    L_log_device = cuda.device_array((height, width), dtype=np.float32)
+    L_1_device = cuda.device_array((height, width), dtype=np.float32)
+    w_device = cuda.device_array((height, width), dtype=np.float32)
+    k_2_device = cuda.device_array((height, width), dtype=np.float32)
+    srgb_image_device = cuda.device_array((height, width, channels), dtype=np.float32)
 
     threadsperblock = (16, 16) # TODO: Experiment with profilers
-    blockspergrid_x = int(math.ceil(width / threadsperblock[0]))
-    blockspergrid_y = int(math.ceil(height / threadsperblock[1]))
+    blockspergrid_x = int(math.ceil(height / threadsperblock[0]))
+    blockspergrid_y = int(math.ceil(width / threadsperblock[1]))
     blockspergrid = (blockspergrid_x, blockspergrid_y)
 
     # Find the luminance of the image

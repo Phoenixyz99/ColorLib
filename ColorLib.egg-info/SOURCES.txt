@@ -3,7 +3,7 @@ README.md
 setup.py
 ColorLib/__init__.py
 ColorLib/cieobserver.py
-ColorLib/exr.py
+ColorLib/output.py
 ColorLib/tonemapping.py
 ColorLib.egg-info/PKG-INFO
 ColorLib.egg-info/SOURCES.txt

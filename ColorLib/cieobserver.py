@@ -11,6 +11,10 @@ def _gausian_fit(lamb, a, B, y, g):
 def wavelength_to_xyz(wavelength, illuminant=np.array([0.95047,1,1.08883])):
     """Converts a wavelength into its RGB counterpart using a piecewise fit.
 
+    Chris Wyman, Peter-Pike Sloan, and Peter Shirley, 
+    "Simple Analytic Approximations to the CIE XYZ Color Matching Functions", 
+    in Journal of Computer Graphics Techniques (JCGT), vol. 2, no. 2, 1–11, 2013.
+
     Args:
         wavelength (float): Wavelength of light in nm.
         illuminant (np.array(3)): CIE illuminant. Defaults to D65.
