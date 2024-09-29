@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2024 Phoenixyz99
+Copyright (c) 2024 Phoenix Allen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +19,19 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+This work includes materials from the paper:
+"Consistent Tone Reproduction" 
+by Min H. Kim and Jan Kautz, 
+in Proceedings of Computer Graphics and Imaging (2008).
+
+
+This work includes materials from the paper:
+"Simple Analytic Approximations to the CIE XYZ Color Matching Functions" 
+by Chris Wyman, Peter-Pike Sloan, and Peter Shirley, 
+which is licensed under Creative Commons (CC BY-ND 3.0). 
+
+Copyright (c) 2013 Chris Wyman, Peter-Pike Sloan, and Peter Shirley 
+
+You can view a copy of the license at https://creativecommons.org/licenses/by-nd/3.0/.
