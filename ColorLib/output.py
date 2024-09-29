@@ -77,6 +77,10 @@ def read_exr(file_path):
 
 
 
+import os
+import OpenEXR
+import numpy as np
+
 def save_exr_image(file_path, image_array):
     """
     Saves an EXR image from a NumPy array of shape (W, H, 3), where each element
@@ -89,6 +93,10 @@ def save_exr_image(file_path, image_array):
 
     if len(image_array.shape) != 3 or image_array.shape[2] != 3:
         raise ValueError("Input image must be a numpy array of shape (W, H, 3)!")
+
+    output_dir = os.path.dirname(file_path)
+    if output_dir and not os.path.exists(output_dir):
+        os.makedirs(output_dir)
 
     height, width, _ = image_array.shape
 
@@ -103,6 +111,7 @@ def save_exr_image(file_path, image_array):
     exr_file.writePixels({'R': R, 'G': G, 'B': B})
 
     exr_file.close()
+
 
 
 
