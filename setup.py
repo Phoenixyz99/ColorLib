@@ -1,12 +1,15 @@
 from setuptools import setup, find_packages
 
+with open('README.md', 'r', encoding='utf-8') as f:
+    long_description = f.read()
+
 setup(
     name="ColorLib",
     version="0.1.0",
     author="Phoenix Allen",
     author_email="phoenxyz99@gmail.com",
     description="A library containing color space and EXR file generation functions.",
-    long_description=open('README.md').read(),
+    long_description=long_description,
     long_description_content_type='text/markdown',
     url="https://github.com/Phoenixyz99/ColorLib",
     packages=find_packages(),
