@@ -4,15 +4,15 @@ setup(
     name="ColorLib",
     version="0.1.0",
     author="Phoenix Allen",
-    author_email="Phoenxyz99@gmail.com",
+    author_email="phoenxyz99@gmail.com",
     description="A library containing color space and EXR file generation functions.",
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     url="https://github.com/Phoenixyz99/ColorLib",
     packages=find_packages(),
     install_requires=[
-        "numpy>=1.19.0",   # Adding NumPy dependency
-        "numba>=0.53.0",   # Adding Numba (supports CUDA)
+        "numpy>=1.19.0",
+        "numba>=0.53.0",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

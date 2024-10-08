@@ -76,11 +76,6 @@ def read_exr(file_path):
 
 
 
-
-import os
-import OpenEXR
-import numpy as np
-
 def save_exr_image(file_path, image_array):
     """
     Saves an EXR image from a NumPy array of shape (W, H, 3), where each element
@@ -152,18 +147,16 @@ def plot(yaxis, xaxis=None, xlabel="X", ylabel="Y", scale="linear"):
     else:
         plt.plot(xaxis, yaxis, label='Item')
 
-    # Add labels and grid
     plt.title(f"{xlabel} vs {ylabel}")
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     plt.grid(True)
     plt.legend()
 
-    # Enable interactive cursor
+    # Enable cursor
     cursor = mplcursors.cursor(hover=True)
     cursor.connect("add", lambda sel: sel.annotation.set_text(
         f'X: {xaxis[int(sel.index)]:.16f}\n'
         f'Y: {yaxis[int(sel.index)]:.16f}\n'))
 
-    # Show the plot
     plt.show()

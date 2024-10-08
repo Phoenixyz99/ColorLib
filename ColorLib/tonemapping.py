@@ -2,24 +2,6 @@ import numpy as np
 from numba import cuda
 import math
 
-M = np.array([
-    [3.2404542, -1.5371385, -0.4985314],
-    [-0.9692660, 1.8760108, 0.0415560],
-    [0.0556434, -0.2040259, 1.0572252]
-])
-
-M0 = np.array([
-    [0.4124, 0.3576, 0.1805],
-    [0.2126, 0.7152, 0.0722],
-    [0.0193, 0.1192, 0.9505]
-])
-
-def xyz_to_rgb(xyz):
-    return np.dot(xyz, M.T)
-
-def rgb_to_xyz(rgb):
-    return np.dot(rgb, M0.T)
-
 # M. Kim and J. Kautz,
 # “Consistent tone reproduction,” 
 # in Proceedings of Computer Graphics and Imaging (2008)
