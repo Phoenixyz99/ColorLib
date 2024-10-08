@@ -10,6 +10,12 @@
  pip install .
  ```
 
+ To update once installed:
+ ```
+ cd ColorLib
+ git pull origin main
+ ```
+
 ## Notice
  The tonemapper included in this plugin uses numba to run CUDA-accelerated operations to allow for real-time tone mapping.
  These functions will not run on a device without a CUDA-enabled GPU.
