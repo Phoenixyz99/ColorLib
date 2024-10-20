@@ -18,7 +18,7 @@ setup(
         "numba>=0.53.0",
         "mplcursors>=0.5.3",
         "OpenEXR>=1.3.2",
-        "Imath>=3.1.3",
+        "Imath>=0.0.2",
         "matplotlib>=3.3.0",
         "mplcursors>=0.5.3"
     ],
