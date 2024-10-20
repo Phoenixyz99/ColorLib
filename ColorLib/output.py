@@ -8,7 +8,6 @@ import mplcursors
 plt.style.use('dark_background')
 
 
-
 def read_exr(file_path):
     """Reads an exr file and outputs it in the form of (H, W, (R, G, B)).
 
