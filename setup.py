@@ -16,6 +16,11 @@ setup(
     install_requires=[
         "numpy>=1.19.0",
         "numba>=0.53.0",
+        "mplcursors>=0.5.3"
+        "OpenEXR>=1.3.2",
+        "Imath>=3.1.3",
+        "matplotlib>=3.3.0",
+        "mplcursors>=0.5.3"
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
