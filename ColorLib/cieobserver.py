@@ -1,4 +1,5 @@
 import numpy as np
+from numba import njit
 
 # Chris Wyman, Peter-Pike Sloan, and Peter Shirley, 
 # "Simple Analytic Approximations to the CIE XYZ Color Matching Functions", 
@@ -16,6 +17,7 @@ M0 = np.array([
     [0.0193, 0.1192, 0.9505]
 ])
 
+@njit
 def xyz_to_rgb(xyz):
     """Converts a 3-long np.ndarray from CIE 1931 XYZ coordinates into RGB.
     
@@ -28,6 +30,7 @@ def xyz_to_rgb(xyz):
 
     return np.dot(xyz, M.T)
 
+@njit
 def rgb_to_xyz(rgb):
     """Converts a 3-long np.ndarray from linear RGB to CIE 1931 XYZ.
     
@@ -40,6 +43,7 @@ def rgb_to_xyz(rgb):
 
     return np.dot(rgb, M0.T)
 
+@njit
 def linear_to_srgb(rgb):
     """Converts linear RGB to sRGB.
     
@@ -61,11 +65,12 @@ def linear_to_srgb(rgb):
 
     return srgb
 
-
+@njit
 def _gausian_fit(lamb, a, B, y, g):
     amount = y if lamb < B else g
     return (np.exp((((lamb - B) * amount)**2)/-2))*a
 
+@njit
 def wavelength_to_xyz(wavelength, illuminant=np.array([0.95047,1,1.08883])):
     """Converts a wavelength into its RGB counterpart using a piecewise fit.
 
