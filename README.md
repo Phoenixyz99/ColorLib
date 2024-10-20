@@ -14,6 +14,7 @@
  ```
  cd ColorLib
  git pull origin main
+ pip install --upgrade ColorLib
  ```
 
 ## Notice
