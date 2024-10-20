@@ -1,5 +1,4 @@
 import numpy as np
-from numba import njit
 
 # Chris Wyman, Peter-Pike Sloan, and Peter Shirley, 
 # "Simple Analytic Approximations to the CIE XYZ Color Matching Functions", 
