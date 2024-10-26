@@ -11,7 +11,7 @@ plt.style.use('dark_background')
 
 
 def read_exr(file_path):
-    """Reads an EXR file and outputs the image data (H, W, (R, G, B))
+    """Reads an EXR file and outputs the image data (H, W, (R, G, B)) or channel data, along with metadata.
     
     Args:
         file_path (str): Location of the EXR to read.
@@ -23,8 +23,12 @@ def read_exr(file_path):
     
     Returns:
         np.ndarray: An array of the image with the shape (H, W, (R, G, B))
-        dict: A dict of metadata.
+        dict: A dict of metadata including custom attributes.
     """
+    import OpenEXR
+    import Imath
+    import numpy as np
+    import os
     
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"File not found! {file_path}")
@@ -95,6 +99,8 @@ def read_exr(file_path):
         raise RuntimeError(f"Error processing EXR file! {e}")
     finally:
         exr_file.close()
+
+
 
 
 
